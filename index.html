@@ -3,25 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Itinerari Melaka 2D1N</title>
+    <title>Itinerari Melaka Trip</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PapaParse CDN untuk baca fail CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     
     <style>
-        /* (Kekalkan semua CSS asal awak di sini, jangan buang) */
-        body { background-color: #f4f9f4; color: #4a4a4a; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-        .hero-section { background: linear-gradient(135deg, #e2f0cb, #ffdfba); padding: 80px 20px; text-align: center; border-bottom: 5px solid #ffb3ba; }
+        body {
+            background-color: #f4f9f4; /* Pastel Sage Green */
+            color: #4a4a4a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #e2f0cb, #ffdfba); /* Pastel Green to Peach */
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 5px solid #ffb3ba; /* Pastel Pink */
+            animation: fadeInDown 1.5s ease-out;
+        }
+
         .hero-title { font-weight: bold; color: #557b83; }
-        .floating-icon { color: #ffb3ba; font-size: 3rem; margin-bottom: 15px; }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating-icon { animation: float 3s ease-in-out infinite; color: #ffb3ba; font-size: 3rem; margin-bottom: 15px; }
+
+        /* --- STYLING GAMBAR MEMBER & KERETA --- */
+        .member-img { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 4px solid #ffdfba; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .member-img:hover { transform: scale(1.1); border-color: #ffb3ba; }
+        .member-card { text-align: center; margin-bottom: 25px; }
+        .car-img { width: 100%; max-width: 150px; border-radius: 10px; margin-top: 10px; border: 2px solid #ced4da; }
+
+        /* --- NEW TIMELINE DESIGN --- */
         .timeline-container { position: relative; padding-left: 40px; margin-bottom: 40px; }
         .timeline-container::before { content: ''; position: absolute; top: 0; bottom: 0; left: 15px; width: 4px; background: #ffdfba; border-radius: 2px; }
         .timeline-item { position: relative; margin-bottom: 30px; }
         .timeline-dot { position: absolute; top: 20px; left: -32.5px; width: 18px; height: 18px; background: #ffb3ba; border: 3px solid #ffffff; border-radius: 50%; z-index: 1; box-shadow: 0 0 0 3px #ffdfba; }
-        .timeline-content { background-color: #ffffff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid #ffb3ba; }
+        .timeline-content { background-color: #ffffff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; border-left: 5px solid #ffb3ba; }
+        .timeline-content:hover { transform: translateX(5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-left: 8px solid #ffb3ba; }
         .time-badge { background-color: #bae1ff; color: #333; font-weight: bold; font-size: 0.9rem; display: inline-block; margin-bottom: 10px; padding: 5px 12px; border-radius: 20px; }
-        .btn-map { background-color: #ffb3ba; color: white; border: none; border-radius: 20px; text-decoration: none; display: inline-block; padding: 6px 15px; margin-top: 10px; }
+        .btn-map { background-color: #ffb3ba; color: white; border: none; border-radius: 20px; transition: background-color 0.3s ease; text-decoration: none; display: inline-block; padding: 6px 15px; margin-top: 10px; }
+        .btn-map:hover { background-color: #ff9fb0; color: white; }
         .day-header { color: #557b83; margin-top: 40px; margin-bottom: 30px; border-bottom: 2px dashed #bae1ff; padding-bottom: 10px; }
     </style>
 </head>
@@ -29,65 +62,156 @@
 
     <header class="hero-section">
         <i class="fas fa-car-side floating-icon"></i>
-        <h1 class="hero-title">ITINERARI MELAKA 2D1N 🌸</h1>
+        <h1 class="hero-title">ITINERARI MELAKA TRIP 🌸</h1>
         <p class="lead">Percutian santai, penuh kenangan & pengalaman baru bersama kawan-kawan!</p>
+        <p><strong>Perjalanan:</strong> KK9, Universiti Malaya ➔ Melaka Bandaraya Bersejarah ➔ KK9, Universiti Malaya</p>
     </header>
 
     <div class="container my-5" style="max-width: 800px;">
+
+        <h2 class="day-header text-center" style="border: none;"><i class="fas fa-users"></i>Trip Member</h2>
+        <div class="row justify-content-center mb-5">
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="amri.jpg" alt="Amri" class="member-img" style="object-position: center 80%;"><h6 class="fw-bold">Amri</h6><small class="text-muted">Pemandu (Hitam)</small></div>
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="athi.jpg" alt="Athirah" class="member-img" style="object-position: center 15%;"><h6 class="fw-bold">Athirah</h6><small class="text-muted">Pemandu (Biru)</small></div>
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="huda.jpg" alt="Huda" class="member-img" style="object-position: center 20%;"><h6 class="fw-bold">Huda</h6><small class="text-muted">Penumpang</small></div>
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="dar.jpg" alt="Dar" class="member-img" style="object-position: center 20%;"><h6 class="fw-bold">Dar</h6><small class="text-muted">Penumpang</small></div>
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="mankim.jpg" alt="Man Kim" class="member-img" style="object-position: center 40%;"><h6 class="fw-bold">Man Kim</h6><small class="text-muted">Penumpang</small></div>
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="yul.jpg" alt="Yul" class="member-img" style="object-position: center 10%;"><h6 class="fw-bold">Yul</h6><small class="text-muted">Penumpang</small></div>
+            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="aqmal.jpg" alt="Aqmal" class="member-img" style="object-position: 70% 30%;"><h6 class="fw-bold">Aqmal</h6><small class="text-muted">Penumpang</small></div>
+        </div>
         
-        <!-- HARI 1 -->
-        <h2 class="day-header"><i class="fas fa-sun"></i> HARI PERTAMA</h2>
-        <div class="timeline-container" id="jadual-hari-1">
-            <p class="text-muted">Sedang memuat turun data dari Google Sheets...</p>
-        </div> 
+        <div id="ruang-itinerari">
+            <p class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Sedang memuat turun data dari Google Sheets...</p>
+        </div>
+        <h2 class="day-header mt-5"><i class="fas fa-wallet"></i> Anggaran Kos (Per Orang)</h2>
+        <div class="table-responsive mb-5">
+            <table class="table table-hover bg-white" style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <thead style="background-color: #bae1ff;">
+                    <tr><th>Perkara</th><th>Anggaran Harga</th></tr>
+                </thead>
+                <tbody id="bajet-table-body">
+                    <tr><td colspan="2" class="text-center text-muted">Sedang memuat turun bajet...</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-        <!-- HARI 2 -->
-        <h2 class="day-header mt-5"><i class="fas fa-camera"></i> HARI KEDUA</h2>
-        <div class="timeline-container" id="jadual-hari-2">
-            <p class="text-muted">Sedang memuat turun data dari Google Sheets...</p>
-        </div> 
+    </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    </div>
-
-    <!-- Skrip Tarik Data Google Sheets -->
     <script>
-        // ⚠️ Letak link CSV Google Sheets awak di bawah ini:
+        // ==========================================
+        // ⚠️ LINK CSV DARI GOOGLE SHEETS
+        // ==========================================
         const sheetCSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTjX2OAkeYuSEjh5KJgz4UAHm_R5366vubiPlCs5D7GLq7BHbvpxXzIl6sX_YTIe4svqF4XdxjcWH-/pub?gid=0&single=true&output=csv";
+        const bajetCSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTjX2OAkeYuSEjh5KJgz4UAHm_R5366vubiPlCs5D7GLq7BHbvpxXzIl6sX_YTIe4svqF4XdxjcWH-/pub?gid=1112212881&single=true&output=csv";
 
+        // --- FUNGSI BIJAK TUKAR MASA ---
+        function kiraMasa(masaStr) {
+            if(!masaStr) return 9999;
+            let str = masaStr.toLowerCase();
+            let match = str.match(/(\d+)[:.](\d+)/); 
+            if(!match) return 9999;
+            
+            let jam = parseInt(match[1]);
+            let minit = parseInt(match[2]);
+            
+            if (str.includes("petang") || str.includes("malam")) {
+                if (jam < 12) jam += 12;
+            } else if (str.includes("pagi")) {
+                if (jam === 12) jam = 0;
+            }
+            return (jam * 60) + minit;
+        }
+
+        // --- FUNGSI TARIK & JANA ITINERARI AUTO-HARI ---
         Papa.parse(sheetCSV_URL, {
             download: true,
             header: true,
             complete: function(results) {
                 const data = results.data;
-                let htmlHari1 = '';
-                let htmlHari2 = '';
+                
+                // Kumpulkan data mengikut Hari { "1": [...], "2": [...], "3": [...] }
+                let dataIkutHari = {};
 
                 data.forEach(row => {
-                    // Pastikan baris tak kosong
-                    if(row.Aktiviti) {
-                        let cardHTML = `
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <span class="time-badge">${row.Masa}</span>
-                                    <h5>${row.Aktiviti}</h5>
-                                    <p>${row.Penerangan}</p>
-                                    ${row.Link_Map ? `<a href="${row.Link_Map}" target="_blank" class="btn btn-map"><i class="fas fa-map-marker-alt"></i> Lihat Lokasi</a>` : ''}
-                                </div>
-                            </div>
-                        `;
-
-                        if(row.Hari == "1") {
-                            htmlHari1 += cardHTML;
-                        } else if (row.Hari == "2") {
-                            htmlHari2 += cardHTML;
+                    let hari = row.Hari ? row.Hari.trim() : "";
+                    if(hari !== "" && row.Aktiviti && row.Aktiviti.trim() !== '') {
+                        if(!dataIkutHari[hari]) {
+                            dataIkutHari[hari] = []; // Cipta fail untuk hari baru
                         }
+                        dataIkutHari[hari].push(row);
                     }
                 });
 
-                // Paparkan ke dalam HTML
-                document.getElementById('jadual-hari-1').innerHTML = htmlHari1 || "<p>Tiada aktiviti diletakkan.</p>";
-                document.getElementById('jadual-hari-2').innerHTML = htmlHari2 || "<p>Tiada aktiviti diletakkan.</p>";
+                // Dapatkan senarai nombor hari dan susun dari kecil ke besar (1, 2, 3...)
+                let senaraiHari = Object.keys(dataIkutHari).sort((a, b) => parseInt(a) - parseInt(b));
+
+                let finalHTML = '';
+
+                if(senaraiHari.length === 0) {
+                    finalHTML = "<p class='text-center text-muted'>Tiada aktiviti diletakkan.</p>";
+                } else {
+                    // Loop untuk setiap hari yang wujud dalam Excel
+                    senaraiHari.forEach(hari => {
+                        // Susun ikut masa pagi ke malam
+                        dataIkutHari[hari].sort((a, b) => kiraMasa(a.Masa) - kiraMasa(b.Masa));
+
+                        // Bina tajuk hari (Kalau Hari 1 logo matahari, kalau lain logo kamera)
+                        let ikon = (hari == 1) ? 'fa-sun' : (hari == 2) ? 'fa-camera' : 'fa-star';
+                        let jarakAtas = (hari > 1) ? 'mt-5' : ''; // Tambah jarak untuk hari ke-2 dan ke atas
+                        
+                        finalHTML += `<h2 class="day-header ${jarakAtas}"><i class="fas ${ikon}"></i> HARI ${hari}</h2>`;
+                        finalHTML += `<div class="timeline-container">`;
+
+                        // Masukkan semua kad aktiviti untuk hari tersebut
+                        dataIkutHari[hari].forEach(row => {
+                            finalHTML += `
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <span class="time-badge">${row.Masa}</span>
+                                        <h5>${row.Aktiviti}</h5>
+                                        <p>${row.Penerangan}</p>
+                                        ${row.Link_Map ? `<a href="${row.Link_Map}" target="_blank" class="btn btn-map"><i class="fas fa-map-marker-alt"></i> Lihat Lokasi</a>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        finalHTML += `</div>`; // Tutup timeline-container
+                    });
+                }
+
+                // Masukkan semua kod HTML yang di-generate ke dalam div 'ruang-itinerari'
+                document.getElementById('ruang-itinerari').innerHTML = finalHTML;
+            },
+            error: function() {
+                document.getElementById('ruang-itinerari').innerHTML = "<p class='text-danger text-center'>Gagal memuat turun jadual. Sila semak pautan CSV.</p>";
+            }
+        });
+
+        // --- FUNGSI TARIK DATA BAJET ---
+        Papa.parse(bajetCSV_URL, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                let htmlBajet = '';
+
+                data.forEach(row => {
+                    if(row.Perkara && row.Perkara.trim() !== '' && row.Harga) {
+                        let isTotal = row.Perkara.toUpperCase().includes("JUMLAH");
+                        let rowClass = isTotal ? "table-success fw-bold" : "";
+                        
+                        htmlBajet += `
+                            <tr class="${rowClass}">
+                                <td>${row.Perkara}</td>
+                                <td>${row.Harga}</td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                document.getElementById('bajet-table-body').innerHTML = htmlBajet || "<tr><td colspan='2' class='text-center text-muted'>Tiada data bajet diletakkan.</td></tr>";
             }
         });
     </script>
