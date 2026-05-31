@@ -1,0 +1,99 @@
+/* Pastel Color Palette & Base Styling */
+body {
+    background-color: #f4f9f4; /* Pastel Sage Green */
+    color: #4a4a4a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #e2f0cb, #ffdfba); /* Pastel Green to Peach */
+    padding: 80px 20px;
+    text-align: center;
+    border-bottom: 5px solid #ffb3ba; /* Pastel Pink */
+    animation: fadeInDown 1.5s ease-out;
+}
+
+.hero-title {
+    font-weight: bold;
+    color: #557b83;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.floating-icon {
+    animation: float 3s ease-in-out infinite;
+    color: #ffb3ba;
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+/* Interactive Cards */
+.timeline-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    border-left: 5px solid #ffdfba;
+    height: 100%;
+}
+
+.timeline-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border-left: 5px solid #ffb3ba;
+}
+
+.time-badge {
+    background-color: #bae1ff; /* Pastel Blue */
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.btn-map {
+    background-color: #ffb3ba;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-map:hover {
+    background-color: #ff9fb0;
+    color: white;
+}
+
+.day-header {
+    color: #557b83;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px dashed #bae1ff;
+    padding-bottom: 10px;
+}
+
+/* Scroll Reveal Classes */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
