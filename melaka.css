@@ -1,25 +1,7 @@
-body { 
-    background-color: #f4f9f4; 
-    color: #4a4a4a; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    overflow-x: hidden; 
-    padding-bottom: 50px; 
-}
-
-.hero-section { 
-    background: linear-gradient(135deg, #e2f0cb, #ffdfba); 
-    padding: 80px 20px; 
-    text-align: center; 
-    border-bottom: 5px solid #ffb3ba; 
-    animation: fadeInDown 1.5s ease-out; 
-}
-
+body { background-color: #f4f9f4; color: #4a4a4a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; padding-bottom: 50px; }
+.hero-section { background: linear-gradient(135deg, #e2f0cb, #ffdfba); padding: 80px 20px; text-align: center; border-bottom: 5px solid #ffb3ba; animation: fadeInDown 1.5s ease-out; }
 .hero-title { font-weight: bold; color: #557b83; }
-
-@keyframes fadeInDown { 
-    from { opacity: 0; transform: translateY(-30px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 
 /* --- STYLING GAMBAR MEMBER & KERETA --- */
 .member-img { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 4px solid #ffdfba; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
@@ -55,6 +37,4 @@ body {
 .owes { color: #ff6b6b; font-weight: bold; }
 .receives { color: #557b83; font-weight: bold; }
 .settled { color: #ced4da; }
-
-/* --- SPLITTER INPUTS --- */
 .split-input { text-align: right; font-weight: bold; }

@@ -3,38 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melaka Trip Itinerary</title>
+    <title>Dynamic Trip Planner</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="melaka.css">
 </head>
 <body>
 
-    <header class="hero-section">
-        <h1 class="hero-title">MELAKA TRIP ITINERARY 🌸</h1>
-        <p class="lead">A relaxing getaway, full of memories & new experiences with friends!</p>
+    <!-- DYNAMIC HEADER -->
+    <header class="hero-section text-center position-relative">
+        <h1 class="hero-title" id="display-trip-title">Loading Trip... ✈️</h1>
+        <p class="lead" id="display-trip-subtitle">Please wait...</p>
+        
+        <!-- Moved Edit Button to be clearly visible under the title -->
+        <button class="btn btn-outline-secondary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalEditTripInfo" style="border-color: #557b83; color: #557b83;">
+            <i class="fas fa-edit"></i> Edit Trip Info
+        </button>
     </header>
 
     <div class="container my-5" style="max-width: 800px;">
 
+        <!-- DYNAMIC TRIP MEMBERS -->
         <h2 class="day-header text-center" style="border: none;"><i class="fas fa-users"></i> Trip Members</h2>
-        <div class="row justify-content-center mb-5">
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="amri.jpg" alt="Amri" class="member-img"><h6 class="fw-bold">Amri</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="athi.jpg" alt="Athirah" class="member-img"><h6 class="fw-bold">Athirah</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="huda.jpg" alt="Huda" class="member-img"><h6 class="fw-bold">Huda</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="dar.jpg" alt="Dar" class="member-img"><h6 class="fw-bold">Dar</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="mankim.jpg" alt="Man Kim" class="member-img"><h6 class="fw-bold">Man Kim</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="yul.jpg" alt="Yul" class="member-img"><h6 class="fw-bold">Yul</h6></div>
-            <div class="col-6 col-sm-4 col-md-3 member-card"><img src="aqmal.jpg" alt="Aqmal" class="member-img"><h6 class="fw-bold">Aqmal</h6></div>
+        
+        <div class="row justify-content-center mb-3" id="ruang-members">
+            <p class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Loading members...</p>
         </div>
+        
+        <button class="btn-tambah-app mb-5" data-bs-toggle="modal" data-bs-target="#modalTambahMember">
+            <i class="fas fa-user-plus me-2"></i>Add New Member
+        </button>
 
+        <!-- ITINERARY SECTION -->
         <div id="ruang-itinerari"></div>
         <button class="btn-tambah-app" data-bs-toggle="modal" data-bs-target="#modalTambahItinerari">
             <i class="fas fa-plus-circle me-2"></i>Add New Activity
         </button>
         
+        <!-- BUDGET SECTION -->
         <h2 class="day-header mt-5"><i class="fas fa-wallet"></i> Group Expenses Tracking</h2>
-        
         <div class="table-responsive mb-3">
             <table class="table table-hover bg-white table-custom shadow-sm">
                 <thead style="background-color: #f8f9fa;">
@@ -54,21 +61,96 @@
         <button class="btn-tambah-app" data-bs-toggle="modal" data-bs-target="#modalTambahBajet">
             <i class="fas fa-plus-circle me-2"></i>Add New Expense (Single)
         </button>
-        
         <button class="btn-tambah-app mt-2" data-bs-toggle="modal" data-bs-target="#modalSplitResit" style="border-color: #557b83; color: #557b83; background: #e2f0cb;">
             <i class="fas fa-receipt me-2"></i>Split a Receipt (Itemized)
         </button>
 
+        <!-- SPLIT SUMMARY CARD -->
         <div class="summary-card" id="split-summary">
             <h5 class="fw-bold text-center mb-4"><i class="fas fa-calculator text-primary"></i> Settlement Summary</h5>
             <div id="summary-content" class="text-center">Calculating...</div>
         </div>
-
     </div>
 
+    <!-- ========================================== -->
+    <!-- MODALS SECTION                             -->
+    <!-- ========================================== -->
+    
+    <!-- EDIT TRIP INFO -->
+    <div class="modal fade" id="modalEditTripInfo" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold text-primary"><i class="fas fa-heading"></i> Edit Trip Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="tripInfoId">
+                    <label class="form-label text-muted small fw-bold">TRIP TITLE</label>
+                    <input type="text" id="editTripTitle" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="e.g. BALI TRIP 2026">
+                    <label class="form-label text-muted small fw-bold">SUBTITLE</label>
+                    <textarea id="editTripSubtitle" class="form-control form-control-lg bg-light border-0 mb-4" rows="2" placeholder="e.g. Let's Go!"></textarea>
+                    <button onclick="simpanTripInfo()" class="btn btn-primary w-100 btn-lg" style="border-radius: 12px; border: none; background-color: #557b83;">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD MEMBER (NOW WITH FILE UPLOAD) -->
+    <div class="modal fade" id="modalTambahMember" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold text-primary"><i class="fas fa-user-plus"></i> Add Trip Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label text-muted small fw-bold">NAME</label>
+                    <input type="text" id="addMemberName" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="e.g. Ali">
+                    
+                    <label class="form-label text-muted small fw-bold">ROLE / DETAILS</label>
+                    <input type="text" id="addMemberRole" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="e.g. Driver / Passenger">
+                    
+                    <label class="form-label text-muted small fw-bold">UPLOAD IMAGE</label>
+                    <input type="file" id="addMemberImgFile" class="form-control form-control-lg bg-light border-0 mb-4" accept="image/*">
+                    
+                    <button id="btnSaveMember" onclick="tambahMember()" class="btn btn-primary w-100 btn-lg" style="border-radius: 12px; background-color: #557b83; border: none;">Add Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: EDIT MEMBER MODAL -->
+    <div class="modal fade" id="modalEditMember" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold text-info"><i class="fas fa-user-edit"></i> Edit Trip Member</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editMemberId">
+                    <input type="hidden" id="editMemberOldImg">
+                    
+                    <label class="form-label text-muted small fw-bold">NAME</label>
+                    <input type="text" id="editMemberName" class="form-control form-control-lg bg-light border-0 mb-3">
+                    
+                    <label class="form-label text-muted small fw-bold">ROLE / DETAILS</label>
+                    <input type="text" id="editMemberRole" class="form-control form-control-lg bg-light border-0 mb-3">
+                    
+                    <label class="form-label text-muted small fw-bold">UPLOAD NEW IMAGE (Leave blank to keep current)</label>
+                    <input type="file" id="editMemberImgFile" class="form-control form-control-lg bg-light border-0 mb-4" accept="image/*">
+                    
+                    <button id="btnUpdateMember" onclick="simpanEditMember()" class="btn btn-info text-white w-100 btn-lg" style="border-radius: 12px; border: none;">Update Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD ITINERARY -->
     <div class="modal fade" id="modalTambahItinerari" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px; border: none; padding: 10px;">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
                 <div class="modal-header border-0">
                     <h5 class="modal-title fw-bold text-primary"><i class="fas fa-map-marker-alt"></i> New Activity</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -76,16 +158,18 @@
                 <div class="modal-body">
                     <input type="text" id="addHari" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="Day (e.g., 1)">
                     <input type="text" id="addMasa" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="Time (e.g., 10:00 AM)">
-                    <input type="text" id="addAktiviti" class="form-control form-control-lg bg-light border-0 mb-4" placeholder="Activity Name">
+                    <input type="text" id="addAktiviti" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="Activity Name">
+                    <textarea id="addPenerangan" class="form-control form-control-lg bg-light border-0 mb-4" rows="2" placeholder="Description"></textarea>
                     <button onclick="tambahItinerari()" class="btn btn-primary w-100 btn-lg" style="border-radius: 12px; background-color: #557b83; border: none;">Save</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- EDIT ITINERARY -->
     <div class="modal fade" id="modalEditItinerari" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px; border: none; padding: 10px;">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
                 <div class="modal-header border-0">
                     <h5 class="modal-title fw-bold text-info"><i class="fas fa-edit"></i> Edit Activity</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -102,55 +186,34 @@
         </div>
     </div>
 
+    <!-- ADD BUDGET (SINGLE) -->
     <div class="modal fade" id="modalTambahBajet" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px; border: none; padding: 10px;">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
                 <div class="modal-header border-0">
                     <h5 class="modal-title fw-bold text-success"><i class="fas fa-money-bill-wave"></i> New Expense</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <input type="text" id="addPerkara" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="Item (e.g. Tol, Nasi Lemak)">
-                    
                     <div class="input-group mb-3">
                         <span class="input-group-text border-0 bg-light fw-bold">RM</span>
                         <input type="number" id="addHarga" class="form-control form-control-lg bg-light border-0" placeholder="0.00">
                     </div>
-
                     <label class="form-label small text-muted fw-bold">WHO PAID?</label>
-                    <select id="addPaidBy" class="form-select form-select-lg bg-light border-0 mb-3">
-                        <option value="">Select person...</option>
-                        <option value="Amri">Amri</option>
-                        <option value="Athirah">Athirah</option>
-                        <option value="Huda">Huda</option>
-                        <option value="Dar">Dar</option>
-                        <option value="Man Kim">Man Kim</option>
-                        <option value="Yul">Yul</option>
-                        <option value="Aqmal">Aqmal</option>
-                        <option value="Group Fund">Group Fund / Split</option>
-                    </select>
-
+                    <select id="addPaidBy" class="form-select form-select-lg bg-light border-0 mb-3"></select>
                     <label class="form-label small text-muted fw-bold">WHO IS THIS FOR?</label>
-                    <select id="addSplitFor" class="form-select form-select-lg bg-light border-0 mb-4">
-                        <option value="Everyone">Everyone (Split Evenly)</option>
-                        <option value="Amri">Only Amri</option>
-                        <option value="Athirah">Only Athirah</option>
-                        <option value="Huda">Only Huda</option>
-                        <option value="Dar">Only Dar</option>
-                        <option value="Man Kim">Only Man Kim</option>
-                        <option value="Yul">Only Yul</option>
-                        <option value="Aqmal">Only Aqmal</option>
-                    </select>
-
+                    <select id="addSplitFor" class="form-select form-select-lg bg-light border-0 mb-4"></select>
                     <button onclick="tambahBajet()" class="btn btn-success w-100 btn-lg" style="border-radius: 12px; background-color: #a3c9a8; border: none;">Save Expense</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- EDIT BUDGET -->
     <div class="modal fade" id="modalEditBajet" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px; border: none; padding: 10px;">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
                 <div class="modal-header border-0">
                     <h5 class="modal-title fw-bold text-success"><i class="fas fa-edit"></i> Edit Expense</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -158,45 +221,24 @@
                 <div class="modal-body">
                     <input type="hidden" id="editBajetId">
                     <input type="text" id="editPerkara" class="form-control form-control-lg bg-light border-0 mb-3" placeholder="Item">
-                    
                     <div class="input-group mb-3">
                         <span class="input-group-text border-0 bg-light fw-bold">RM</span>
                         <input type="number" id="editHarga" class="form-control form-control-lg bg-light border-0" placeholder="0.00">
                     </div>
-
                     <label class="form-label small text-muted fw-bold">WHO PAID?</label>
-                    <select id="editPaidBy" class="form-select form-select-lg bg-light border-0 mb-3">
-                        <option value="Amri">Amri</option>
-                        <option value="Athirah">Athirah</option>
-                        <option value="Huda">Huda</option>
-                        <option value="Dar">Dar</option>
-                        <option value="Man Kim">Man Kim</option>
-                        <option value="Yul">Yul</option>
-                        <option value="Aqmal">Aqmal</option>
-                        <option value="Group Fund">Group Fund / Split</option>
-                    </select>
-
+                    <select id="editPaidBy" class="form-select form-select-lg bg-light border-0 mb-3"></select>
                     <label class="form-label small text-muted fw-bold">WHO IS THIS FOR?</label>
-                    <select id="editSplitFor" class="form-select form-select-lg bg-light border-0 mb-4">
-                        <option value="Everyone">Everyone (Split Evenly)</option>
-                        <option value="Amri">Only Amri</option>
-                        <option value="Athirah">Only Athirah</option>
-                        <option value="Huda">Only Huda</option>
-                        <option value="Dar">Only Dar</option>
-                        <option value="Man Kim">Only Man Kim</option>
-                        <option value="Yul">Only Yul</option>
-                        <option value="Aqmal">Only Aqmal</option>
-                    </select>
-
+                    <select id="editSplitFor" class="form-select form-select-lg bg-light border-0 mb-4"></select>
                     <button onclick="simpanEditBajet()" class="btn btn-success w-100 btn-lg" style="border-radius: 12px; background-color: #a3c9a8; border: none;">Update</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ADVANCED RECEIPT SPLITTER -->
     <div class="modal fade" id="modalSplitResit" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content" style="border-radius: 20px; border: none; padding: 10px;">
+            <div class="modal-content p-3" style="border-radius: 20px; border: none;">
                 <div class="modal-header border-0">
                     <h5 class="modal-title fw-bold text-primary"><i class="fas fa-receipt"></i> Split Receipt</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -206,34 +248,17 @@
                         <label class="form-label text-muted small fw-bold">RECEIPT NAME</label>
                         <input type="text" id="splitResitName" class="form-control form-control-lg bg-light border-0" placeholder="e.g., Seafood Dinner">
                     </div>
-                    
                     <div class="mb-4">
                         <label class="form-label text-muted small fw-bold">WHO PAID THE FULL BILL?</label>
-                        <select id="splitResitPayer" class="form-select form-select-lg bg-light border-0">
-                            <option value="">Select person...</option>
-                            <option value="Amri">Amri</option>
-                            <option value="Athirah">Athirah</option>
-                            <option value="Huda">Huda</option>
-                            <option value="Dar">Dar</option>
-                            <option value="Man Kim">Man Kim</option>
-                            <option value="Yul">Yul</option>
-                            <option value="Aqmal">Aqmal</option>
-                        </select>
+                        <select id="splitResitPayer" class="form-select form-select-lg bg-light border-0"></select>
                     </div>
-
                     <hr>
                     <label class="form-label text-muted small fw-bold mb-3">HOW MUCH DID EACH PERSON EAT?</label>
                     <p class="text-muted small mb-3">Leave blank or 0 if they didn't eat/participate.</p>
                     
-                    <div class="row g-2 mb-2"><div class="col-4 fw-bold align-self-center">Amri</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_Amri" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
-                    <div class="row g-2 mb-2"><div class="col-4 fw-bold align-self-center">Athirah</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_Athirah" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
-                    <div class="row g-2 mb-2"><div class="col-4 fw-bold align-self-center">Huda</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_Huda" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
-                    <div class="row g-2 mb-2"><div class="col-4 fw-bold align-self-center">Dar</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_Dar" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
-                    <div class="row g-2 mb-2"><div class="col-4 fw-bold align-self-center">Man Kim</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_ManKim" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
-                    <div class="row g-2 mb-2"><div class="col-4 fw-bold align-self-center">Yul</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_Yul" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
-                    <div class="row g-2 mb-4"><div class="col-4 fw-bold align-self-center">Aqmal</div><div class="col-8"><div class="input-group"><span class="input-group-text border-0 bg-light">RM</span><input type="number" id="split_Aqmal" class="form-control bg-light border-0 split-input" placeholder="0.00"></div></div></div>
+                    <div id="dynamic-split-inputs"></div>
 
-                    <button onclick="simpanSplitResit()" class="btn btn-primary w-100 btn-lg" style="border-radius: 12px; border: none; background-color: #557b83;">Process Split</button>
+                    <button onclick="simpanSplitResit()" class="btn btn-primary w-100 btn-lg mt-4" style="border-radius: 12px; border: none; background-color: #557b83;">Process Split</button>
                 </div>
             </div>
         </div>
@@ -241,7 +266,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script src="melaka.js"></script>
 </body>
 </html>
