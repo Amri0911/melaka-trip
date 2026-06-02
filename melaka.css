@@ -1,99 +1,60 @@
-/* Pastel Color Palette & Base Styling */
-body {
-    background-color: #f4f9f4; /* Pastel Sage Green */
-    color: #4a4a4a;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow-x: hidden;
+body { 
+    background-color: #f4f9f4; 
+    color: #4a4a4a; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    overflow-x: hidden; 
+    padding-bottom: 50px; 
 }
 
-.hero-section {
-    background: linear-gradient(135deg, #e2f0cb, #ffdfba); /* Pastel Green to Peach */
-    padding: 80px 20px;
-    text-align: center;
-    border-bottom: 5px solid #ffb3ba; /* Pastel Pink */
-    animation: fadeInDown 1.5s ease-out;
+.hero-section { 
+    background: linear-gradient(135deg, #e2f0cb, #ffdfba); 
+    padding: 80px 20px; 
+    text-align: center; 
+    border-bottom: 5px solid #ffb3ba; 
+    animation: fadeInDown 1.5s ease-out; 
 }
 
-.hero-title {
-    font-weight: bold;
-    color: #557b83;
+.hero-title { font-weight: bold; color: #557b83; }
+
+@keyframes fadeInDown { 
+    from { opacity: 0; transform: translateY(-30px); } 
+    to { opacity: 1; transform: translateY(0); } 
 }
 
-/* Animations */
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* --- STYLING GAMBAR MEMBER & KERETA --- */
+.member-img { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 4px solid #ffdfba; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+.member-img:hover { transform: scale(1.1); border-color: #ffb3ba; }
+.member-card { text-align: center; margin-bottom: 25px; }
+.day-header { color: #557b83; margin-top: 50px; margin-bottom: 30px; border-bottom: 2px dashed #bae1ff; padding-bottom: 10px; font-weight: bold; }
 
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
+/* --- TIMELINE DESIGN (MODERN APP FEEL) --- */
+.timeline-container { position: relative; padding-left: 40px; margin-bottom: 20px; }
+.timeline-container::before { content: ''; position: absolute; top: 0; bottom: 0; left: 15px; width: 4px; background: #ffdfba; border-radius: 2px; }
+.timeline-item { position: relative; margin-bottom: 25px; }
+.timeline-dot { position: absolute; top: 20px; left: -32.5px; width: 18px; height: 18px; background: #ffb3ba; border: 3px solid #ffffff; border-radius: 50%; z-index: 1; box-shadow: 0 0 0 3px #ffdfba; }
+.timeline-content { background-color: #ffffff; border-radius: 16px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: all 0.3s ease; border: 1px solid #f0f0f0; position: relative; }
+.timeline-content:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-color: #ffb3ba; }
+.time-badge { background-color: #e2f0cb; color: #557b83; font-weight: 600; font-size: 0.85rem; display: inline-block; margin-bottom: 15px; padding: 6px 14px; border-radius: 20px; }
 
-.floating-icon {
-    animation: float 3s ease-in-out infinite;
-    color: #ffb3ba;
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
+/* --- ACTIONS BUTTONS --- */
+.action-group { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
+.btn-action { color: #d1d5db; background: #f8f9fa; border: none; border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: 0.2s ease-in-out; cursor: pointer; }
+.btn-action.edit:hover { color: #fff; background-color: #bae1ff; }
+.btn-action.delete:hover { color: #fff; background-color: #ffb3ba; }
 
-/* Interactive Cards */
-.timeline-card {
-    background-color: #ffffff;
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    border-left: 5px solid #ffdfba;
-    height: 100%;
-}
+/* --- DASHED ADD BUTTONS --- */
+.btn-tambah-app { display: block; width: 100%; padding: 15px; background: transparent; border: 2px dashed #ced4da; color: #6c757d; border-radius: 16px; font-weight: 600; text-align: center; transition: all 0.3s; cursor: pointer; margin-top: 10px; }
+.btn-tambah-app:hover { background: #f8f9fa; border-color: #ffb3ba; color: #ffb3ba; }
 
-.timeline-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    border-left: 5px solid #ffb3ba;
-}
+/* --- CLEAN TABLE STYLING --- */
+.table-custom { border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; border: 1px solid #f0f0f0; }
+.table-custom th, .table-custom td { padding: 15px; vertical-align: middle; }
 
-.time-badge {
-    background-color: #bae1ff; /* Pastel Blue */
-    color: #333;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
+/* --- SUMMARY CARD --- */
+.summary-card { background: #fff; border-radius: 16px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #bae1ff; margin-top: 20px; }
+.owes { color: #ff6b6b; font-weight: bold; }
+.receives { color: #557b83; font-weight: bold; }
+.settled { color: #ced4da; }
 
-.btn-map {
-    background-color: #ffb3ba;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    transition: background-color 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.btn-map:hover {
-    background-color: #ff9fb0;
-    color: white;
-}
-
-.day-header {
-    color: #557b83;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    border-bottom: 2px dashed #bae1ff;
-    padding-bottom: 10px;
-}
-
-/* Scroll Reveal Classes */
-.reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* --- SPLITTER INPUTS --- */
+.split-input { text-align: right; font-weight: bold; }
